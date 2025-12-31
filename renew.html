@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Renew Membership - Church of the Holy Spirit Rumuoke</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      background: #F8F9F4;
+      margin: 0;
+      padding: 0;
+      color: #222;
+    }
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    }
+    h1 {
+      text-align: center;
+      color: #0A7A33;
+      margin-bottom: 20px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    label {
+      font-weight: 600;
+    }
+    input {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      background: #0A7A33;
+      color: #fff;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #075a26;
+    }
+    .message {
+      margin-top: 20px;
+      padding: 10px;
+      border-radius: 8px;
+    }
+    .success {
+      background: #d4edda;
+      color: #155724;
+    }
+    .error {
+      background: #f8d7da;
+      color: #721c24;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Renew Membership</h1>
+    <p>Provide your email and username to renew your membership for one more year.</p>
+    <form id="renew-form">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" required>
+      <button type="submit">Renew Membership</button>
+    </form>
+    <div id="message"></div>
+    <p style="text-align: center; margin-top: 20px;"><a href="signup.html">Sign Up</a> | <a href="members.html">View Membership List</a></p>
+  </div>
+
+  <script>
+    document.getElementById('renew-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      const data = {
+        email: formData.get('email'),
+        username: formData.get('username')
+      };
+
+      try {
+        const response = await fetch('/renew', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: new URLSearchParams(data)
+        });
+
+        if (response.ok) {
+          const result = await response.text();
+          document.getElementById('message').innerHTML = `<div class="message success">${result}</div>`;
+        } else {
+          const error = await response.text();
+          document.getElementById('message').innerHTML = `<div class="message error">${error}</div>`;
+        }
+      } catch (error) {
+        document.getElementById('message').innerHTML = `<div class="message error">Error: ${error.message}</div>`;
+      }
+    });
+  </script>
+</body>
+</html>

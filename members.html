@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Membership - Church of the Holy Spirit Rumuoke</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      background: #F8F9F4;
+      margin: 0;
+      padding: 0;
+      color: #222;
+    }
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    }
+    h1 {
+      text-align: center;
+      color: #0A7A33;
+      margin-bottom: 20px;
+    }
+    .filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .filters a {
+      padding: 8px 12px;
+      background: #eee;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #111;
+    }
+    .filters a.active {
+      background: #0A7A33;
+      color: #fff;
+    }
+    .search {
+      margin-bottom: 20px;
+    }
+    .search input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    .member-list {
+      display: grid;
+      gap: 10px;
+    }
+    .member {
+      background: #fff;
+      padding: 14px;
+      border-radius: 8px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+    }
+    .member h3 {
+      margin: 0;
+      color: #0A7A33;
+    }
+    .member p {
+      margin: 4px 0;
+    }
+    .ministries {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .ministry {
+      background: #e8f8ec;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #0A7A33;
+    }
+    .status {
+      font-weight: bold;
+    }
+    .status.active {
+      color: green;
+    }
+    .status.expired {
+      color: red;
+    }
+    .renew-link {
+      color: #0A7A33;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Membership List</h1>
+    <p id="total-members">Total Members: Loading...</p>
+    <div class="filters" id="filters">
+      <a href="#" data-category="all" class="active">All</a>
+      <a href="#" data-category="Children">Children</a>
+      <a href="#" data-category="Youth">Youth</a>
+      <a href="#" data-category="Women">Women</a>
+      <a href="#" data-category="Men">Men</a>
+    </div>
+    <div class="search">
+      <input type="text" id="search" placeholder="Search by name or ministry">
+    </div>
+    <div class="member-list" id="member-list">
+      <!-- Members will be loaded here -->
+    </div>
+    <p><a href="signup.html">Sign Up New Member</a> | <a href="renew.html" class="renew-link">Renew Membership</a></p>
+  </div>
+
+  <script>
+    let allMembers = [];
+    let currentCategory = 'all';
+
+    async function loadMembers() {
+      try {
+        const response = await fetch('/api/members');
+        if (!response.ok) throw new Error('Failed to load members');
+        allMembers = await response.json();
+        document.getElementById('total-members').textContent = `Total Members: ${allMembers.length}`;
+        displayMembers();
+      } catch (error) {
+        console.error(error);
+        document.getElementById('member-list').innerHTML = '<p>Error loading members.</p>';
+        document.getElementById('total-members').textContent = 'Total Members: 0';
+      }
+    }
+
+    function displayMembers() {
+      const searchTerm = document.getElementById('search').value.toLowerCase();
+      const filtered = allMembers.filter(member => {
+        const matchesCategory = currentCategory === 'all' || (member.ministries || []).some(m => m.toLowerCase().includes(currentCategory.toLowerCase()));
+        const matchesSearch = !searchTerm || member.name.toLowerCase().includes(searchTerm) || (member.ministries || []).some(m => m.toLowerCase().includes(searchTerm));
+        return matchesCategory && matchesSearch;
+      });
+
+      const list = document.getElementById('member-list');
+      list.innerHTML = filtered.map(member => `
+        <div class="member">
+          <h3>${member.name}</h3>
+          <p>Joined: ${new Date(member.created_at).toLocaleDateString()}</p>
+          <p class="status ${member.active ? 'active' : 'expired'}">Status: ${member.active ? 'Active until ' + new Date(member.expires_at).toLocaleDateString() : 'Expired'}</p>
+          <div class="ministries">
+            ${(member.ministries || []).map(m => `<span class="ministry">${m}</span>`).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    document.getElementById('filters').addEventListener('click', function(e) {
+      if (e.target.tagName === 'A') {
+        e.preventDefault();
+        document.querySelectorAll('#filters a').forEach(a => a.classList.remove('active'));
+        e.target.classList.add('active');
+        currentCategory = e.target.dataset.category;
+        displayMembers();
+      }
+    });
+
+    document.getElementById('search').addEventListener('input', displayMembers);
+
+    loadMembers();
+  </script>
+</body>
+</html>

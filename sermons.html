@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHS Media | Sermons</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg1:#f8fff9;
+  --bg2:#e6f5ea;
+  --glass:rgba(255,255,255,0.75);
+  --text:#0b3d1c;
+  --accent:#2e8b57;
+  --border:rgba(46,139,87,0.25);
+  --shadow:0 12px 35px rgba(0,0,0,0.12);
+}
+
+body.dark{
+  --bg1:#0b3d1c;
+  --bg2:#145a32;
+  --glass:rgba(255,255,255,0.12);
+  --text:#f4fff7;
+  --border:rgba(255,255,255,0.25);
+  --shadow:0 12px 40px rgba(0,0,0,0.45);
+}
+
+*{
+  box-sizing:border-box;
+  font-family:'Inter',sans-serif;
+}
+
+/* BODY ANIMATION */
+body{
+  margin:0;
+  min-height:100vh;
+  color:var(--text);
+  background:linear-gradient(-45deg,var(--bg1),var(--bg2),#edf7f0,var(--bg1));
+  background-size:400% 400%;
+  animation:bgFlow 14s ease infinite;
+}
+
+@keyframes bgFlow{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+/* NAV */
+nav{
+  position:sticky;
+  top:0;
+  z-index:10;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 20px;
+  background:var(--glass);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+
+nav input{
+  padding:10px 16px;
+  border-radius:25px;
+  border:1px solid var(--border);
+  outline:none;
+}
+
+nav button{
+  padding:10px 18px;
+  border-radius:25px;
+  border:none;
+  background:var(--accent);
+  color:#fff;
+  cursor:pointer;
+}
+
+/* HEADER */
+header{
+  text-align:center;
+  padding:70px 20px 40px;
+}
+
+header h1{
+  font-size:2.8rem;
+  letter-spacing:3px;
+  margin-bottom:12px;
+}
+
+header p{
+  font-weight:300;
+  opacity:0.85;
+}
+
+/* CATEGORIES */
+.categories{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+  padding-bottom:20px;
+}
+
+.categories button{
+  padding:9px 18px;
+  border-radius:25px;
+  border:1px solid var(--border);
+  background:var(--glass);
+  cursor:pointer;
+  color:inherit;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:22px;
+  padding:20px;
+}
+
+/* CARD */
+.card{
+  background:var(--glass);
+  backdrop-filter:blur(18px);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:16px;
+  box-shadow:var(--shadow);
+  opacity:0;
+  transform:translateY(35px);
+  transition:0.6s ease;
+}
+
+.card.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.card:hover{
+  transform:translateY(-4px);
+}
+
+video{
+  width:100%;
+  border-radius:16px;
+  margin-bottom:10px;
+}
+
+.card h3{
+  margin:8px 0;
+  font-weight:600;
+}
+
+/* ACTIONS */
+.actions{
+  display:flex;
+  justify-content:space-between;
+  margin-top:10px;
+}
+
+.actions button{
+  background:none;
+  border:none;
+  cursor:pointer;
+  color:var(--accent);
+  font-weight:500;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+  header h1{font-size:2.2rem}
+  nav input{width:140px}
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav>
+  <input type="text" id="search" placeholder="Search sermons">
+  <button onclick="toggleTheme()">Theme</button>
+</nav>
+
+<!-- HEADER -->
+<header>
+  <h1>CHS MEDIA</h1>
+  <p>Empowered by the Spirit • Transformed by Grace</p>
+</header>
+
+<!-- CATEGORIES -->
+<div class="categories">
+  <button onclick="filterCards('all')">All</button>
+  <button onclick="filterCards('faith')">Faith</button>
+  <button onclick="filterCards('grace')">Grace</button>
+  <button onclick="filterCards('prayer')">Prayer</button>
+  <button onclick="filterCards('youth')">Youth</button>
+  <button onclick="filterCards('leadership')">Leadership</button>
+</div>
+
+<!-- GRID -->
+<div class="grid">
+
+  <div class="card" data-category="faith">
+    <video controls src="lv_0_20251109151458.mp4"></video>
+    <h3>Walking by Faith</h3>
+    <div class="actions">
+      <button>👍 Like</button>
+      <button>🔗 Share</button>
+      <button>💬 Comment</button>
+    </div>
+  </div>
+
+  <div class="card" data-category="grace">
+    <video controls src="lv_0_20251123155148.mp4"></video>
+    <h3>Saved by Grace</h3>
+    <div class="actions">
+      <button>👍 Like</button>
+      <button>🔗 Share</button>
+      <button>💬 Comment</button>
+    </div>
+  </div>
+
+  <div class="card" data-category="prayer">
+    <video controls src="lv_0_20251121193843.mp4"></video>
+    <h3>The Power of Prayer</h3>
+    <div class="actions">
+      <button>👍 Like</button>
+      <button>🔗 Share</button>
+      <button>💬 Comment</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* THEME TOGGLE */
+function toggleTheme(){
+  document.body.classList.toggle("dark");
+  localStorage.setItem("chsTheme",document.body.className);
+}
+if(localStorage.getItem("chsTheme")){
+  document.body.className = localStorage.getItem("chsTheme");
+}
+
+/* FILTER */
+function filterCards(category){
+  document.querySelectorAll(".card").forEach(card=>{
+    card.style.display =
+      category==="all" || card.dataset.category===category
+      ? "block" : "none";
+  });
+}
+
+/* SEARCH */
+document.getElementById("search").addEventListener("input",e=>{
+  let value=e.target.value.toLowerCase();
+  document.querySelectorAll(".card").forEach(card=>{
+    card.style.display = card.innerText.toLowerCase().includes(value)
+    ? "block":"none";
+  });
+});
+
+/* SCROLL REVEAL */
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting) entry.target.classList.add("show");
+  });
+},{threshold:0.2});
+
+document.querySelectorAll(".card").forEach(card=>observer.observe(card));
+</script>
+
+</body>
+</html>

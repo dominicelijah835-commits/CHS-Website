@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Church of the Holy Spirit Rumuoke | Home</title>
+
+  <!--
+    FULL RESPONSIVE HTML (Green + Milky White)
+    - Responsive header (logo + name + nav)
+    - Hero with motto
+    - Verse of the day
+    - Ministries cards
+    - Facebook follow
+    - WhatsApp group buttons (General + Youth)
+    - Floating WhatsApp chat icon
+    - Prayer request slide panel
+    - Micro-interactions & mobile-friendly styles
+    Replace the "replace-..." values with your real links/images.
+  -->
+
+  <style>
+    /* ---------- RESET ---------- */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html,body { height: 100%; }
+
+    :root {
+      --primary: #0A7A33;   /* deep green */
+      --milk: #F8F9F4;      /* milky white */
+      --accent: #128C7E;    /* accent green */
+      --text: #222;
+      --card-shadow: rgba(0,0,0,0.12);
+      --glass: rgba(255,255,255,0.7);
+    }
+
+/* ===== FULL PAGE BACKGROUND SLIDESHOW (local preview) ===== */
+body { position: relative; overflow-x: hidden; }
+#bg-slideshow { position: fixed; inset:0; z-index:-2; overflow:hidden }
+#bg-slideshow .slide { position:absolute; inset:0; background-size:cover; background-position:center; background-repeat:no-repeat; opacity:0; transition:opacity 1s ease-in-out }
+#bg-slideshow .slide.active { opacity:1 }
+/* subtle dark overlay for readability */
+body::after { content: ""; position: fixed; inset:0; z-index:-1; background: rgba(10,20,10,0.45); }
+  
+    /* ---------- LAYOUT CONTAINER ---------- */
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* ---------- HEADER ---------- */
+    header.site-header {
+      background: linear-gradient(90deg, var(--primary), #075a26);
+      color: #fff;
+      padding: 14px 0;
+      box-shadow: 0 3px 8px rgba(10,60,30,0.15);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    /* logo + title area */
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .logo {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: white; /* visible if logo missing */
+      flex-shrink: 0;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+    }
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .site-title {
+      line-height: 1.05;
+      font-weight: 700;
+      font-size: 18px;
+      text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+    }
+    .site-sub {
+      font-weight: 500;
+      font-size: 12px;
+      opacity: 0.95;
+      margin-top: 2px;
+    }
+
+    /* nav */
+    nav.main-nav {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+    nav.main-nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 10px;
+      border-radius: 8px;
+      transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
+    }
+    nav.main-nav a:hover {
+      background: rgba(255,255,255,0.08);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+    }
+
+    /* CTA give button in header */
+    .give-btn {
+      background: #fff;
+      color: var(--primary);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-weight: 700;
+      box-shadow: 0 6px 18px rgba(10,122,51,0.12);
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      background:
+        linear-gradient(180deg, rgba(10,122,51,0.28), rgba(10,122,51,0.12)),
+        url("image.png") center/cover no-repeat;
+      padding: 56px 0;
+      color: #fff;
+      text-align: center;
+    }
+    .hero .wrap { display:flex; flex-direction:column; align-items:center; gap:10px; }
+    .hero h1 {
+      font-size: 24px;
+      max-width: 900px;
+      background: rgba(0,0,0,0.35);
+      padding: 12px 18px;
+      border-radius: 10px;
+      display:inline-block;
+      font-weight:800;
+      letter-spacing: .2px;
+    }
+    .hero .motto {
+      background: rgba(255,255,255,0.06);
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin-top: 6px;
+      font-weight:600;
+      font-size: 15px;
+    }
+
+    /* ---------- CONTENT SECTIONS ---------- */
+    section { padding: 34px 0; }
+    section h2 { text-align:center; margin-bottom:12px; font-size:20px; }
+
+    /* Verse card */
+    .verse-card {
+      margin: 0 auto 16px;
+      max-width: 520px;
+      background: linear-gradient(180deg, #f8fff8, #f1fff1);
+      border-left: 5px solid var(--primary);
+      padding: 14px 16px;
+      border-radius: 8px;
+      font-style: italic;
+      box-shadow: 0 6px 18px var(--card-shadow);
+      text-align:center;
+    }
+
+    /* ministries cards grid */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-top: 12px;
+    }
+    .card {
+      background: #fff;
+      padding: 18px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px var(--card-shadow);
+      text-align: center;
+      font-weight:700;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 18px 36px rgba(0,0,0,0.12); }
+
+    /* actions: facebook + whatsapp group buttons */
+    .actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .btn {
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+    }
+    .btn.facebook { background: #1877F2; }
+    .btn.whatsapp { background: #25D366; color: #012; }
+    .btn.whatsapp.youth { background: #128C7E; color: #fff; }
+
+    /* ---------- FLOAT & PRAYER PANEL ---------- */
+    /* floating whatsapp chat (round) */
+    .float-chat {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 1200;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #25D366;
+      color: #fff;
+      font-size: 24px;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.22);
+      text-decoration: none;
+      transition: transform .14s ease;
+    }
+    .float-chat:hover { transform: scale(1.12); }
+
+    /* prayer button (above floating chat) */
+    #prayBtn {
+      position: fixed;
+      right: 18px;
+      bottom: 86px;
+      z-index: 1200;
+      background: var(--primary);
+      color: #fff;
+      padding: 11px 14px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.16);
+      cursor: pointer;
+    }
+
+    /* prayer sliding panel */
+    #prayerPanel {
+      position: fixed;
+      right: -100%;
+      bottom: 0;
+      width: 320px;
+      max-width: 92%;
+      background: #fff;
+      padding: 16px;
+      border-radius: 12px 12px 0 0;
+      box-shadow: -10px 0 30px rgba(0,0,0,0.18);
+      transition: right .34s cubic-bezier(.2,.9,.2,1);
+      z-index: 1199;
+    }
+    #prayerPanel.open { right: 12px; } /* when open on larger screens */
+    #prayerPanel h3 { margin-bottom: 8px; }
+    #prayerPanel input, #prayerPanel textarea {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid #e6e6e6;
+      margin-top: 8px;
+      font-size: 14px;
+    }
+    #prayerPanel button.send {
+      margin-top: 10px;
+      width: 100%;
+      background: var(--primary);
+      color: #fff;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      font-weight:700;
+      cursor: pointer;
+    }
+    
+    /* ---------- FOOTER ---------- */
+    footer {
+      background: linear-gradient(90deg, #073d1a, var(--primary));
+      color: #fff;
+      padding: 26px 0;
+      text-align: center;
+      margin-top: 14px;
+    }
+    
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 980px) {
+      .cards { grid-template-columns: repeat(2, 1fr); }
+      .header-inner { gap: 10px; }
+    }
+    
+    @media (max-width: 680px) {
+    .header-inner { flex-direction: column; align-items: center; text-align: center; }
+      .brand { justify-content: center; }
+      nav.main-nav { justify-content: center; gap: 6px; }
+      .hero { padding: 44px 12px; }
+      .hero h1 { font-size: 20px; padding: 10px 12px; }
+      .cards { grid-template-columns: 1fr; }
+      #prayerPanel.open { right: 8px; width: 92%; }
+      #prayerPanel { right: -110%; } /* keep panel off-screen until opened */
+    }
+    
+    /* small visual polish for links/buttons on touch */
+    a, button { -webkit-tap-highlight-color: rgba(0,0,0,0.06); }
+  </style>
+</head>
+<body>
+  <div id="bg-slideshow" aria-hidden="true"></div>
+
+  <!-- SITE HEADER -->
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <div class="brand">
+        <!-- Replace with your logo image link; keep same size or larger and it will scale -->
+        <div class="logo" aria-hidden="false">
+          <!-- Use static image served by Flask: place a logo at backend/static/images/logo.svg or update path -->
+          <img src="Untitled-1-removebg-preview.png" width="60" height="60" alt="Church of the Holy Spirit Rumuoke logo">
+        </div>
+          
+          <!-- Church name and short tagline -->
+          <div>
+            <div class="site-title">Church of the Holy Spirit Rumuoke<br><small class="site-sub">Anglican Communion</small></div>
+          </div>
+          </div>
+          
+          <!-- Main nav -->
+        <nav class="main-nav" aria-label="Main navigation">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="sermons.html">Sermons</a>
+        
+          <a href="signup.html">New Here?</a>
+          <a class="give-btn" href="give.html">Give</a>
+          </nav>
+    </div>
+  </header>
+  
+  <!-- HERO / BANNER -->
+  <section class="hero" role="banner" aria-label="Welcome">
+    <div class="wrap">
+      <h1>Welcome to Our Church</h1>
+      <div class="motto">Empowered by the Spirit, Transformed by Grace</div>
+    </div>
+  </section>
+  
+  <!-- VERSE OF THE DAY -->
+  <section>
+    <div class="wrap">
+      <div class="verse-card" role="note" aria-live="polite">
+        <div id="verse-text">Loading verse...</div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- MINISTRIES -->
+  <section aria-labelledby="ministries-title">
+    <div class="wrap">
+      <h2 id="ministries-title">Our Ministries</h2>
+      <div class="cards" role="list">
+        <div class="card" role="listitem">Worship & Praise</div>
+        <div class="card" role="listitem">Youth & Teens</div>
+        <div class="card" role="listitem">Women’s Fellowship</div>
+        <div class="card" role="listitem">Missions & Outreach</div>
+        <div class="card" role="listitem">Membership</div>
+      </div>
+    </div>
+  </section>
+      
+  <p style="text-align:center; max-width:720px; margin:0 auto 8px;">
+            Follow our official pages and join the WhatsApp groups to receive updates and connect with the church family.
+      </p>
+      
+      <div class="actions">
+        <!-- Replace with your Facebook page link -->
+        <a class="btn facebook" href="https://www.facebook.com/profile.php?id=61573876625113&mibextid=ZbWKwL" target="_blank" rel="noopener">
+          <!-- simple icon text, you can replace with SVG if you want -->
+          👍 Follow on Facebook
+        </a>
+        
+        <!-- WhatsApp group buttons (replace links) -->
+        <a class="btn whatsapp" href="https://chat.whatsapp.com/LN1wNZjhtf9LkU7Oyp8Gil" target="_blank" rel="noopener">
+          💚 General Church WhatsApp
+        </a>
+        
+        <a class="btn whatsapp youth" href="https://chat.whatsapp.com/K16c92wwj2VG9aTOcoUyqp?mode=hqrc" target="_blank" rel="noopener">
+          🌱 Youth Fellowship WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- FLOATING WHATSAPP CHAT (single click to chat) -->
+  <!-- Replace YOURNUMBER with international format without + (e.g. 2348012345678) -->
+  <a class="float-chat" href="https://wa.me/2348033962127" target="_blank" aria-label="Chat with church on WhatsApp">💬</a>
+  
+  <!-- PRAYER REQUEST BUTTON + SLIDE PANEL -->
+  <button id="prayBtn" aria-haspopup="dialog" aria-controls="prayerPanel">I Need Prayer</button>
+  
+  <div id="prayerPanel" role="dialog" aria-modal="false" aria-labelledby="prayerTitle">
+    <h3 id="prayerTitle">Submit a Prayer Request</h3>
+    
+    <!-- inputs - you can wire these to an email or backend later -->
+    <label for="prayerName" style="display:none;">Your name</label>
+    <input id="prayerName" type="text" placeholder="Your name (optional)" />
+    
+    <label for="prayerText" style="display:none;">Prayer</label>
+    <textarea id="prayerText" rows="4" placeholder="Write your prayer request here..."></textarea>
+    
+    <button class="send" id="sendPrayer">Send Request</button>
+    <div id="prayerStatus" style="margin-top:8px;font-size:13px;color:#333;display:none;"></div>
+  </div>
+  
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap">
+      <div style="font-weight:700;">Church of the Holy Spirit Rumuoke Anglican Communion</div>
+      <div style="margin-top:6px;">Sundays • 8:00 AM •28b Rumuoke Road, Off Ada George, Port Harcourt. Rivers state, Nigeria</div>
+            <h2>Stay Connected</h2>
+      <div style="margin-top:8px; font-size:13px; opacity:0.9;">© <span id="year"></span> Church of the Holy Spirit Rumuoke</div>
+    </div>
+  </footer>
+  <!-- ---------- SCRIPTS ---------- -->
+  <script>
+    // ---------- Verse of the Day ----------
+    (function verseOfDay() {
+      const verses = [
+      "The Lord is my shepherd; I shall not want. — Psalm 23:1",
+      "I can do all things through Christ who strengthens me. — Philippians 4:13",
+          // Close panel if clicking outside
+      "The joy of the Lord is my strength. — Nehemiah 8:10",
+      "With God all things are possible. — Matthew 19:26",
+      "For we walk by faith, not by sight. — 2 Corinthians 5:7",
+      "Seek first the kingdom of God and his righteousness. — Matthew 6:33",
+      "Cast all your anxiety on him because he cares for you. — 1 Peter 5:7"
+      ];
+      const el = document.getElementById('verse-text');
+      const day = new Date().toISOString().slice(0,10);
+      let sum = 0;
+      for (let i=0; i<day.length; i++) sum += day.charCodeAt(i);
+      el.textContent = verses[sum % verses.length];
+    })();
+
+    // ---------- Background Slideshow (local preview) ----------
+    (function(){
+      const images = [
+        "1742767891024.jpg",
+        "1742767906506.jpg",
+        "1742768069629.jpg",
+        "1755782542866.jpg",
+        "1755719034150.jpg",
+        "1755719121722.jpg",
+        "1755782486194.jpg",
+        "1755719058151.jpg",
+        "1755719191959.jpg",
+        "1755719082275.jpg"
+      ];
+      const container = document.getElementById('bg-slideshow');
+      if(!container) return;
+      images.forEach((name, i) => {
+        const d = document.createElement('div');
+        d.className = 'slide' + (i===0? ' active':'');
+        d.style.backgroundImage = `url('${name}')`;
+        container.appendChild(d);
+        const img = new Image(); img.src = name;
+      });
+      if(images.length <= 1) return;
+      let idx = 0;
+      const slides = container.querySelectorAll('.slide');
+      const interval = 7000;
+      let timer = setInterval(()=>{ slides[idx].classList.remove('active'); idx = (idx+1) % slides.length; slides[idx].classList.add('active'); }, interval);
+      document.addEventListener('visibilitychange', ()=>{ if(document.hidden) clearInterval(timer); else timer = setInterval(()=>{ slides[idx].classList.remove('active'); idx = (idx+1) % slides.length; slides[idx].classList.add('active'); }, interval); });
+    })();
+    
+    // ---------- Prayer Panel & Submit Handler ----------
+    (function prayerPanel() {
+      const btn = document.getElementById('prayBtn');
+      const panel = document.getElementById('prayerPanel');
+      const send = document.getElementById('sendPrayer');
+      const status = document.getElementById('prayerStatus');
+      
+      let open = false;
+      btn.addEventListener('click', function () {
+        open = !open;
+        panel.classList.toggle('open', open);
+        if (open) document.getElementById('prayerText').focus();
+      });
+      
+      // ---------- REAL Prayer Submit ----------
+      send.addEventListener('click', function () {
+        const name = document.getElementById('prayerName').value.trim() || 'Anonymous';
+        const prayer = document.getElementById('prayerText').value.trim();
+        
+        status.style.display = 'block';
+        
+        // Frontend validation
+        if (!prayer) {
+          status.style.color = '#b00020';
+          status.textContent = 'Please write a prayer request.';
+          return;
+        }
+        
+        status.style.color = '#555';
+        status.textContent = 'Sending prayer request...';
+        
+        // Send request to Flask backend (relative URL when served by the Flask app)
+        fetch('/api/prayer', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, prayer })
+        })
+        .then(async response => {
+          const data = await response.json();
+          if (response.ok) {
+            status.style.color = '#0b7a2b';
+            status.textContent = data.message || 'Prayer sent successfully!';
+            document.getElementById('prayerName').value = '';
+            document.getElementById('prayerText').value = '';
+          } else {
+            status.style.color = '#b00020';
+            status.textContent = data.message || 'Unable to send prayer. Try again later.';
+          }
+        })
+        .catch(error => {
+          console.error(error);
+          status.style.color = '#b00020';
+          status.textContent = 'Network error. Please check your connection.';
+        });
+      }); // end send.addEventListener('click')
+
+      // Close panel if clicking outside
+      window.addEventListener('click', function(e) {
+        const inside = panel.contains(e.target) || btn.contains(e.target);
+        if (!inside && open) {
+          open = false;
+          panel.classList.remove('open');
+        }
+      });
+
+    })(); // end prayerPanel IIFE
+    
+    // ---------- Footer Year ----------
+    document.getElementById('year').textContent = new Date().getFullYear();
+    
+    // ---------- External Links Safety ----------
+    (function markExternal() {
+      const anchors = document.querySelectorAll('a[target="_blank"]');
+      anchors.forEach(a => a.setAttribute('rel', 'noopener noreferrer'));
+    })();
+  </script>
+  <script>
+/* BACKGROUND IMAGE SLIDESHOW (NO FADE, 100% QUALITY) */
+(function () {
+  const images = [
+    "frontend ( what people see)/1742767891024.jpg",
+    "frontend ( what people see)/1755719034150.jpg",
+    "frontend ( what people see)/1755719121722.jpg",
+    "frontend ( what people see)/1742768069629.jpg",
+    "frontend ( what people see)/1755782542866.jpg",
+    "frontend ( what people see)/1755719191959.jpg",
+    "frontend ( what people see)/1755782486194.jpg",
+    "frontend ( what people see)/1755719058151.jpg",
+    "frontend ( what people see)/1755719082275.jpg"
+    
+  ];
+
+  let index = 0;
+
+  setInterval(() => {
+    index = (index + 1) % images.length;
+    document.body.style.backgroundImage = `url('${images[index]}')`;
+  }, 8000); // change image every 8 seconds
+})();
+</script>
+</body>
+</html>

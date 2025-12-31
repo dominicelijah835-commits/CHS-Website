@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Church Membership System</title>
+    <style>
+        /* ============================================
+           CSS STYLING - Green & Milky-White Theme
+           ============================================ */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f5f0 0%, #e8f5e9 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* Header Section */
+        header {
+            background: linear-gradient(135deg, #2e7d32 0%, #43a047 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Main Content Area */
+        main {
+            padding: 40px 20px;
+        }
+
+        /* ============================================
+           FORM STYLING
+           ============================================ */
+
+        .form-section {
+            background: #f5f5f0;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            border-left: 5px solid #2e7d32;
+        }
+
+        .form-section h2 {
+            color: #2e7d32;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2e7d32;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #2e7d32;
+            box-shadow: 0 0 10px rgba(46, 125, 50, 0.2);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* Button Styling */
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #2e7d32;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1b5e20;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+        }
+
+        .btn-secondary {
+            background: #43a047;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #2e7d32;
+        }
+
+        .btn-small {
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            margin: 5px;
+        }
+
+        .btn-danger {
+            background: #e53935;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c62828;
+        }
+
+        /* ============================================
+           SEARCH & FILTER SECTION
+           ============================================ */
+
+        .controls-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f5f5f0;
+            border-radius: 10px;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .filter-box {
+            min-width: 200px;
+        }
+
+        .filter-box select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        /* ============================================
+           MEMBERS TABLE STYLING
+           ============================================ */
+
+        .members-section h2 {
+            color: #2e7d32;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .member-count-badge {
+            background: #2e7d32;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            min-width: 140px;
+            text-align: center;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th {
+            background: #2e7d32;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tr:hover {
+            background: #f5f5f0;
+        }
+
+        /* Status Badge */
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-block;
+        }
+
+        .status-active {
+            background: #c8e6c9;
+            color: #1b5e20;
+        }
+
+        .status-expired {
+            background: #ffccbc;
+            color: #bf360c;
+        }
+
+        /* Action Buttons in Table */
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        /* ============================================
+           ALERT/MESSAGE STYLING
+           ============================================ */
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert-success {
+            background: #c8e6c9;
+            color: #1b5e20;
+            border-left: 4px solid #2e7d32;
+        }
+
+        .alert-error {
+            background: #ffccbc;
+            color: #bf360c;
+            border-left: 4px solid #e53935;
+        }
+
+        .alert-info {
+            background: #b3e5fc;
+            color: #01579b;
+            border-left: 4px solid #0277bd;
+        }
+
+        /* ============================================
+           EMPTY STATE
+           ============================================ */
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+
+        .empty-state p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        /* ============================================
+           RESPONSIVE DESIGN
+           ============================================ */
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            main {
+                padding: 20px 15px;
+            }
+
+            .form-section {
+                padding: 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .controls-section {
+                flex-direction: column;
+            }
+
+            .search-box,
+            .filter-box {
+                min-width: 100%;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            th,
+            td {
+                padding: 10px;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+
+            .btn-small {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+                margin: 3px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .form-section,
+            .controls-section {
+                padding: 15px;
+            }
+
+            th,
+            td {
+                padding: 8px;
+            }
+
+            .status-badge {
+                font-size: 0.8rem;
+                padding: 4px 10px;
+            }
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+
+        footer {
+            background: #f5f5f0;
+            text-align: center;
+            padding: 20px;
+            color: #999;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        /* No data message */
+        .no-data {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ============================================
+             HEADER SECTION
+             ============================================ -->
+        <header>
+            <h1>Church Membership System</h1>
+            <p>Empowered by the spirit Transformed by Grace</p>
+        </header>
+
+        <!-- ============================================
+             MAIN CONTENT
+             ============================================ -->
+        <main>
+            <!-- Alert Messages (shown dynamically with JavaScript) -->
+            <div id="alertBox" class="alert alert-success"></div>
+
+            <!-- ============================================
+                 SIGN-UP FORM SECTION
+                 ============================================ -->
+            <section class="form-section">
+                <h2>📝 Add New Member</h2>
+                <form id="membershipForm">
+                    <!-- Full Name Input -->
+                    <div class="form-group">
+                        <label for="fullName">Full Name *</label>
+                        <input type="text" id="fullName" placeholder="Enter full name" required>
+                    </div>
+
+                    <!-- Membership Category Dropdown -->
+                    <div class="form-group">
+                        <label for="category">Membership Category *</label>
+                        <select id="category" required>
+                            <option value="">-- Select a category --</option>
+                            <option value="Youth">Youth Fellowship</option>
+                            <option value="Men">Men's Fellowship</option>
+                            <option value="Women">Women's Fellowship</option>
+                            <option value="Children">Children's Ministry</option>
+                        </select>
+                    </div>
+
+                    <!-- Two columns: Registration Date (auto) and Submit Button -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="registrationDate">Registration Date (Auto-Generated)</label>
+                            <input type="text" id="registrationDate" readonly style="background: #e8f5e9;">
+                        </div>
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">
+                                ✓ Add Member
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+
+            <!-- ============================================
+                 SEARCH & FILTER SECTION
+                 ============================================ -->
+            <div class="controls-section">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 Search member by name...">
+                </div>
+                <div class="filter-box">
+                    <select id="categoryFilter">
+                        <option value="">All Categories</option>
+                        <option value="Youth">Youth Fellowship</option>
+                        <option value="Men">Men's Fellowship</option>
+                        <option value="Women">Women's Fellowship</option>
+                        <option value="Children">Children's Ministry</option>
+                    </select>
+                </div>
+                <button class="btn btn-secondary btn-small" onclick="resetFilters()">Clear Filters</button>
+                <button class="btn btn-danger btn-small" onclick="clearAllData()">Delete All Data</button>
+            </div>
+
+            <!-- ============================================
+                 MEMBERS LIST SECTION
+                 ============================================ -->
+            <section class="members-section">
+                <h2>
+                    👥 Members List
+                    <span class="member-count-badge">Total: <span id="memberCount">0</span></span>
+                </h2>
+                <div class="table-wrapper">
+                    <table id="membersTable">
+                        <thead>
+                            <tr>
+                                <th>Full Name</th>
+                                <th>Category</th>
+                                <th>Registration Date</th>
+                                <th>Expiry Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <tr>
+                                <td colspan="6" class="no-data">No members yet. Add your first member above! 😊</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <!-- ============================================
+             FOOTER
+             ============================================ -->
+        <footer>
+            <p>© 2025 Church Membership System- Church of the Holy Spirit Rumuoke</p>
+        </footer>
+    </div>
+
+    <!-- ============================================
+         JAVASCRIPT - ALL FUNCTIONALITY
+         ============================================ -->
+    <script>
+        /* =============================================
+           INITIALIZATION AND VARIABLES
+           ============================================= */
+
+        // This is the LocalStorage key where we'll store all member data
+        const STORAGE_KEY = 'churchMembers';
+
+        // Get references to HTML elements (DOM elements)
+        const membershipForm = document.getElementById('membershipForm');
+        const fullNameInput = document.getElementById('fullName');
+        const categoryInput = document.getElementById('category');
+        const registrationDateInput = document.getElementById('registrationDate');
+        const tableBody = document.getElementById('tableBody');
+        const searchInput = document.getElementById('searchInput');
+        const categoryFilter = document.getElementById('categoryFilter');
+        const alertBox = document.getElementById('alertBox');
+        const memberCountElement = document.getElementById('memberCount');
+
+        /* =============================================
+           FUNCTION: Initialize the page on load
+           ============================================= */
+        function initialize() {
+            // Set today's date as the registration date (read-only field)
+            setRegistrationDate();
+            
+            // Load members from LocalStorage and display them
+            displayMembers();
+            
+            // Add event listeners for search and filter
+            searchInput.addEventListener('input', filterAndSearch);
+            categoryFilter.addEventListener('change', filterAndSearch);
+            
+            // Show a welcome message
+            showAlert('Welcome! Manage your church members below.', 'info');
+        }
+
+        /* =============================================
+           FUNCTION: Set registration date to today
+           ============================================= */
+        function setRegistrationDate() {
+            const today = new Date();
+            const formattedDate = today.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            registrationDateInput.value = formattedDate;
+        }
+
+        /* =============================================
+           FUNCTION: Calculate expiry date (1 year from now)
+           ============================================= */
+        function calculateExpiryDate(registrationDate) {
+            // Create a new date object from the registration date
+            const expiry = new Date(registrationDate);
+            
+            // Add 1 year to the registration date
+            expiry.setFullYear(expiry.getFullYear() + 1);
+            
+            // Return the expiry date in string format
+            return expiry.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        /* =============================================
+           FUNCTION: Check if membership is still active
+           ============================================= */
+        function isMembershipActive(expiryDate) {
+            // Parse the expiry date string
+            const expiry = new Date(expiryDate);
+            
+            // Get today's date
+            const today = new Date();
+            
+            // Check if expiry date is after today
+            return expiry > today;
+        }
+
+        /* =============================================
+           FUNCTION: Get membership status
+           ============================================= */
+        function getMembershipStatus(expiryDate) {
+            if (isMembershipActive(expiryDate)) {
+                return 'Active';
+            } else {
+                return 'Expired';
+            }
+        }
+
+        /* =============================================
+           FUNCTION: Get all members from LocalStorage
+           ============================================= */
+        function getMembers() {
+            // Get data from browser's LocalStorage
+            const data = localStorage.getItem(STORAGE_KEY);
+            
+            // If no data exists, return empty array
+            if (!data) {
+                return [];
+            }
+            
+            // Parse and return the data
+            return JSON.parse(data);
+        }
+
+        /* =============================================
+           FUNCTION: Save members to LocalStorage
+           ============================================= */
+        function saveMembers(members) {
+            // Convert array to JSON string and save to LocalStorage
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(members));
+        }
+
+        /* =============================================
+           FUNCTION: Handle form submission
+           ============================================= */
+        membershipForm.addEventListener('submit', function(event) {
+            // Prevent page reload when form is submitted
+            event.preventDefault();
+            
+            // Get the values entered by the user
+            const fullName = fullNameInput.value.trim();
+            const category = categoryInput.value;
+            const registrationDate = registrationDateInput.value;
+            
+            // Validate that fields are not empty
+            if (!fullName || !category) {
+                showAlert('Please fill in all fields!', 'error');
+                return;
+            }
+            
+            // Create a unique ID using timestamp (like: 1704067200000)
+            const id = Date.now();
+            
+            // Calculate expiry date (1 year from registration)
+            const expiryDate = calculateExpiryDate(new Date(registrationDate));
+            
+            // Create a new member object
+            const newMember = {
+                id: id,
+                fullName: fullName,
+                category: category,
+                registrationDate: registrationDate,
+                expiryDate: expiryDate
+            };
+            
+            // Get existing members
+            const members = getMembers();
+            
+            // Add new member to the list
+            members.push(newMember);
+            
+            // Save updated list to LocalStorage
+            saveMembers(members);
+            
+            // Show success message
+            showAlert(`✓ ${fullName} added successfully as a member!`, 'success');
+            
+            // Clear the form for next entry
+            membershipForm.reset();
+            setRegistrationDate();
+            
+            // Refresh the table display
+            displayMembers();
+        });
+
+        /* =============================================
+           FUNCTION: Display all members in the table
+           ============================================= */
+        function displayMembers() {
+            // Get all members from LocalStorage
+            const members = getMembers();
+            
+            // Clear the table body
+            tableBody.innerHTML = '';
+            
+            // Check if there are no members
+            if (members.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="no-data">No members yet. Add your first member above! 😊</td>
+                    </tr>
+                `;
+                memberCountElement.textContent = '0';
+                return;
+            }
+            
+            // Loop through each member and create a table row
+            members.forEach(member => {
+                // Get the membership status
+                const status = getMembershipStatus(member.expiryDate);
+                const statusClass = status === 'Active' ? 'status-active' : 'status-expired';
+                
+                // Create a table row with member data
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${member.fullName}</td>
+                    <td>${member.category}</td>
+                    <td>${member.registrationDate}</td>
+                    <td>${member.expiryDate}</td>
+                    <td><span class="status-badge ${statusClass}">${status}</span></td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-secondary btn-small" onclick="renewMembership(${member.id})">
+                                🔄 Renew
+                            </button>
+                            <button class="btn btn-danger btn-small" onclick="deleteMember(${member.id})">
+                                🗑️ Delete
+                            </button>
+                        </div>
+                    </td>
+                `;
+                
+                // Add the row to the table
+                tableBody.appendChild(row);
+            });
+            
+            // Update the member count
+            memberCountElement.textContent = members.length;
+        }
+
+        /* =============================================
+           FUNCTION: Renew a member's subscription
+           ============================================= */
+        function renewMembership(memberId) {
+            // Get all members
+            const members = getMembers();
+            
+            // Find the member with this ID
+            const memberIndex = members.findIndex(m => m.id === memberId);
+            
+            // Check if member was found
+            if (memberIndex === -1) {
+                showAlert('Member not found!', 'error');
+                return;
+            }
+            
+            // Get the member
+            const member = members[memberIndex];
+            
+            // Calculate new expiry date (1 year from today)
+            const today = new Date();
+            const newExpiryDate = new Date(today);
+            newExpiryDate.setFullYear(newExpiryDate.getFullYear() + 1);
+            
+            // Format the new expiry date
+            const formattedNewExpiryDate = newExpiryDate.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            // Update the member's expiry date
+            member.expiryDate = formattedNewExpiryDate;
+            
+            // Save updated members to LocalStorage
+            saveMembers(members);
+            
+            // Show success message
+            showAlert(`✓ ${member.fullName}'s membership renewed until ${formattedNewExpiryDate}!`, 'success');
+            
+            // Refresh the table display
+            displayMembers();
+        }
+
+        /* =============================================
+           FUNCTION: Delete a member (Password Protected)
+           ============================================= */
+        function deleteMember(memberId) {
+            // Ask user for confirmation before deleting
+            if (!confirm('Are you sure you want to delete this member?')) {
+                return; // User clicked "Cancel"
+            }
+            
+            // Ask for admin password before proceeding
+            const adminPassword = prompt('⛔ Enter admin password to delete member:');
+            
+            // Check if user cancelled the password prompt
+            if (adminPassword === null) {
+                return; // User clicked "Cancel"
+            }
+            
+            // Get the stored admin password from LocalStorage
+            const storedPassword = localStorage.getItem('adminPassword') || 'admin123';
+            
+            // Verify the password
+            if (adminPassword !== storedPassword) {
+                showAlert('❌ Incorrect password! Only admin can delete members.', 'error');
+                return;
+            }
+            
+            // Get all members
+            let members = getMembers();
+            
+            // Find the member name for the success message
+            const memberToDelete = members.find(m => m.id === memberId);
+            
+            // Filter out the member with this ID
+            members = members.filter(m => m.id !== memberId);
+            
+            // Save updated list to LocalStorage
+            saveMembers(members);
+            
+            // Show success message
+            showAlert(`✓ ${memberToDelete.fullName} has been removed from the system.`, 'success');
+            
+            // Refresh the table display
+            displayMembers();
+        }
+
+        /* =============================================
+           FUNCTION: Filter and search members
+           ============================================= */
+        function filterAndSearch() {
+            // Get the search query (lowercase for case-insensitive search)
+            const searchQuery = searchInput.value.toLowerCase();
+            
+            // Get the selected category filter
+            const selectedCategory = categoryFilter.value;
+            
+            // Get all members
+            const members = getMembers();
+            
+            // Filter members based on search and category
+            const filteredMembers = members.filter(member => {
+                // Check if name matches search query
+                const nameMatch = member.fullName.toLowerCase().includes(searchQuery);
+                
+                // Check if category matches filter (or if filter is empty)
+                const categoryMatch = selectedCategory === '' || member.category === selectedCategory;
+                
+                // Return true only if both conditions are met
+                return nameMatch && categoryMatch;
+            });
+            
+            // Clear the table
+            tableBody.innerHTML = '';
+            
+            // Check if there are matching results
+            if (filteredMembers.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="no-data">No members found matching your search. 🔍</td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            // Display the filtered members
+            filteredMembers.forEach(member => {
+                const status = getMembershipStatus(member.expiryDate);
+                const statusClass = status === 'Active' ? 'status-active' : 'status-expired';
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${member.fullName}</td>
+                    <td>${member.category}</td>
+                    <td>${member.registrationDate}</td>
+                    <td>${member.expiryDate}</td>
+                    <td><span class="status-badge ${statusClass}">${status}</span></td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-secondary btn-small" onclick="renewMembership(${member.id})">
+                                🔄 Renew
+                            </button>
+                            <button class="btn btn-danger btn-small" onclick="deleteMember(${member.id})">
+                                🗑️ Delete
+                            </button>
+                        </div>
+                    </td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+        }
+
+        /* =============================================
+           FUNCTION: Reset all filters
+           ============================================= */
+        function resetFilters() {
+            // Clear search input
+            searchInput.value = '';
+            
+            // Reset category filter
+            categoryFilter.value = '';
+            
+            // Refresh display to show all members
+            displayMembers();
+            
+            showAlert('Filters cleared. Showing all members.', 'info');
+        }
+
+        /* =============================================
+           FUNCTION: Clear all data with confirmation (Password Protected)
+           ============================================= */
+        function clearAllData() {
+            // Ask for confirmation (twice to be extra safe)
+            if (!confirm('⚠️ Are you sure you want to DELETE ALL MEMBERS? This cannot be undone!')) {
+                return;
+            }
+            
+            if (!confirm('This is your last chance! Delete all member data?')) {
+                return;
+            }
+            
+            // Ask for admin password before proceeding
+            const adminPassword = prompt('⛔ Enter admin password to delete all data:');
+            
+            // Check if user cancelled the password prompt
+            if (adminPassword === null) {
+                return; // User clicked "Cancel"
+            }
+            
+            // Get the stored admin password from LocalStorage
+            const storedPassword = localStorage.getItem('adminPassword') || 'admin123';
+            
+            // Verify the password
+            if (adminPassword !== storedPassword) {
+                showAlert('❌ Incorrect password! Only admin can delete all data.', 'error');
+                return;
+            }
+            
+            // Clear LocalStorage
+            localStorage.removeItem(STORAGE_KEY);
+            
+            // Refresh display
+            displayMembers();
+            
+            showAlert('⚠️ All member data has been deleted.', 'error');
+        }
+
+        /* =============================================
+           FUNCTION: Set admin password
+           ============================================= */
+        function setAdminPassword() {
+            // Get current password
+            const currentPassword = localStorage.getItem('adminPassword') || 'admin123';
+            
+            // Ask user if they want to change password
+            const currentInput = prompt(`Current admin password is: ${currentPassword}\n\nEnter new password (or click Cancel to keep current):`);
+            
+            // If user cancelled, do nothing
+            if (currentInput === null) {
+                return;
+            }
+            
+            // Validate password is not empty
+            if (currentInput.trim() === '') {
+                showAlert('❌ Password cannot be empty!', 'error');
+                return;
+            }
+            
+            // Save new password
+            localStorage.setItem('adminPassword', currentInput.trim());
+            
+            showAlert(`✓ Admin password changed to: ${currentInput.trim()}`, 'success');
+        }
+
+        /* =============================================
+           FUNCTION: Show alert messages
+           ============================================= */
+        function showAlert(message, type = 'success') {
+            // Set the alert message
+            alertBox.textContent = message;
+            
+            // Remove any previous type classes
+            alertBox.classList.remove('alert-success', 'alert-error', 'alert-info');
+            
+            // Add the new type class
+            alertBox.classList.add(`alert-${type}`);
+            
+            // Show the alert
+            alertBox.classList.add('show');
+            
+            // Hide the alert after 4 seconds
+            setTimeout(() => {
+                alertBox.classList.remove('show');
+            }, 4000);
+        }
+
+        /* =============================================
+           RUN ON PAGE LOAD
+           ============================================= */
+        // Wait for the page to fully load, then initialize
+        window.addEventListener('DOMContentLoaded', initialize);
+    </script>
+</body>
+</html>

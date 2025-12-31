@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Give - Church of the Holy Spirit Rumuoke</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      background: #F8F9F4;
+      margin: 0;
+      padding: 0;
+      color: #222;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    }
+
+    h1 {
+      text-align: center;
+      color: #0A7A33;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .account {
+      background: #f0f8f0;
+      padding: 14px 16px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .account span {
+      font-weight: 700;
+    }
+
+    button.copy-btn {
+      background: #0A7A33;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s ease;
+    }
+
+    button.copy-btn:hover {
+      background: #075a26;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-top: 20px;
+      border-bottom: 2px solid #0A7A33;
+      padding-bottom: 4px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>GIVE TO GOD</h1>
+
+    <p>
+      Giving is an act of worship. Your tithes, offerings, and donations enable the Church of the Holy Spirit Rumuoke to
+      impact lives, support church projects, and extend God's love to the community. May God bless you abundantly as
+      you give with a joyful heart.
+    </p>
+
+    <div class="section-title">Church Bank Accounts</div>
+
+    <div class="account">
+      <div>
+        <span>Welfare Account</span><br>
+        Church of the Holy Spirit Rumuoke
+      </div>
+      <div>
+        <span id="welfare">1234567890</span>
+        <button class="copy-btn" onclick="copyText('welfare')">Copy</button>
+      </div>
+    </div>
+
+    <div class="account">
+      <div>
+        <span>Project Account</span><br>
+        Church of the Holy Spirit Rumuoke
+      </div>
+      <div>
+        <span id="project">0987654321</span>
+        <button class="copy-btn" onclick="copyText('project')">Copy</button>
+      </div>
+    </div>
+
+    <div class="account">
+      <div>
+        <span>AYF Account</span><br>
+        Church of the Holy Spirit Rumuoke
+      </div>
+      <div>
+        <span id="ayf">2345678901</span>
+        <button class="copy-btn" onclick="copyText('ayf')">Copy</button>
+      </div>
+    </div>
+
+    <div class="account">
+      <div>
+        <span>CMF Account</span><br>
+        Church of the Holy Spirit Rumuoke
+      </div>
+      <div>
+        <span id="cmf">3456789012</span>
+        <button class="copy-btn" onclick="copyText('cmf')">Copy</button>
+      </div>
+    </div>
+
+    <div class="account">
+      <div>
+        <span>WG Account</span><br>
+        Church of the Holy Spirit Rumuoke
+      </div>
+      <div>
+        <span id="wg">4567890123</span>
+        <button class="copy-btn" onclick="copyText('wg')">Copy</button>
+      </div>
+    </div>
+
+    <div class="account">
+      <div>
+        <span>MU Account</span><br>
+        Church of the Holy Spirit Rumuoke
+      </div>
+      <div>
+        <span id="mu">5678901234</span>
+        <button class="copy-btn" onclick="copyText('mu')">Copy</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function copyText(id) {
+      const text = document.getElementById(id).textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Copied: " + text);
+      }).catch(err => {
+        alert("Failed to copy: " + err);
+      });
+    }
+  </script>
+</body>
+</html>
